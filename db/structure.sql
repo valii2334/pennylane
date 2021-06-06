@@ -165,6 +165,7 @@ CREATE TABLE public.recipes (
     difficulty integer DEFAULT 0 NOT NULL,
     people_quantity integer NOT NULL,
     cook_time integer NOT NULL,
+    rate double precision,
     image_url text,
     nb_comments integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
@@ -172,7 +173,8 @@ CREATE TABLE public.recipes (
     CONSTRAINT cook_time_check CHECK ((cook_time > 0)),
     CONSTRAINT nb_comments_check CHECK ((nb_comments >= 0)),
     CONSTRAINT people_quantity_check CHECK ((people_quantity > 0)),
-    CONSTRAINT prep_time_check CHECK ((prep_time > 0))
+    CONSTRAINT prep_time_check CHECK ((prep_time > 0)),
+    CONSTRAINT rate_check CHECK (((rate >= (0)::double precision) AND (rate <= (5)::double precision)))
 );
 
 

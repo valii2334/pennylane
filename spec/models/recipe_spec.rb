@@ -36,6 +36,8 @@ RSpec.describe Recipe, type: :model do
   it { should validate_numericality_of(:cook_time).is_greater_than(0) }
   it { should validate_numericality_of(:people_quantity).is_greater_than(0) }
   it { should validate_numericality_of(:nb_comments).is_greater_than_or_equal_to(0) }
+  it { should validate_numericality_of(:rate).is_greater_than_or_equal_to(0) }
+  it { should validate_numericality_of(:rate).is_less_than_or_equal_to(5) }
 
   it '#prep_time db constraint' do
     recipe = FactoryBot.create(:recipe)
@@ -59,5 +61,12 @@ RSpec.describe Recipe, type: :model do
     recipe = FactoryBot.create(:recipe)
 
     expect { recipe.update_column(:nb_comments, -1) }.to raise_error(ActiveRecord::StatementInvalid)
+  end
+
+  it '#rate db constraint' do
+    recipe = FactoryBot.create(:recipe)
+
+    expect { recipe.update_column(:rate, -1) }.to raise_error(ActiveRecord::StatementInvalid)
+    expect { recipe.update_column(:rate, 6) }.to raise_error(ActiveRecord::StatementInvalid)
   end
 end

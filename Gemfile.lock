@@ -47,6 +47,8 @@ GEM
     activerecord (6.1.3.2)
       activemodel (= 6.1.3.2)
       activesupport (= 6.1.3.2)
+    activerecord-import (1.0.8)
+      activerecord (>= 3.2)
     activestorage (6.1.3.2)
       actionpack (= 6.1.3.2)
       activejob (= 6.1.3.2)
@@ -214,6 +216,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activerecord-import
   devise
   factory_bot_rails (~> 6.1)
   ffaker (~> 2.18.0)

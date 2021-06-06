@@ -24,6 +24,8 @@ class Recipe < ApplicationRecord
   validates :people_quantity, numericality: { greater_than: 0 }
   validates :cook_time,       numericality: { greater_than: 0 }
   validates :nb_comments,     numericality: { greater_than_or_equal_to: 0 }
+  validates :rate,            numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 5 },
+                              allow_nil: true
 
   def total_time
     prep_time + cook_time
