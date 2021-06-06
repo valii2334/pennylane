@@ -170,6 +170,7 @@ CREATE TABLE public.recipes (
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
     CONSTRAINT cook_time_check CHECK ((cook_time > 0)),
+    CONSTRAINT nb_comments_check CHECK ((nb_comments >= 0)),
     CONSTRAINT people_quantity_check CHECK ((people_quantity > 0)),
     CONSTRAINT prep_time_check CHECK ((prep_time > 0))
 );

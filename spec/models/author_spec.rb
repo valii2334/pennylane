@@ -1,5 +1,20 @@
 require 'rails_helper'
 
 RSpec.describe Author, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  subject { FactoryBot.build(:author) }
+
+  ##################################
+  # Attribute existence
+  ##################################
+
+  it { should have_attribute :name }
+
+  it { should have_many(:recipes) }
+
+  ##################################
+  # Validations
+  ##################################
+
+  it { should validate_presence_of :name }
+  it { should validate_uniqueness_of :name }
 end

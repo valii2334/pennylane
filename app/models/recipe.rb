@@ -5,7 +5,7 @@ class Recipe < ApplicationRecord
   has_many :recipe_tags
   has_many :tags, through: :recipe_tags
 
-  has_one :author
+  belongs_to :author, optional: true
 
   enum budget: [
     :bon_marché,
@@ -24,4 +24,8 @@ class Recipe < ApplicationRecord
   validates :people_quantity, numericality: { greater_than: 0 }
   validates :cook_time,       numericality: { greater_than: 0 }
   validates :nb_comments,     numericality: { greater_than_or_equal_to: 0 }
+
+  def total_time
+    prep_time + cook_time
+  end
 end

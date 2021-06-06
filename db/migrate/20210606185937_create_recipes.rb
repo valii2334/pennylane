@@ -18,5 +18,6 @@ class CreateRecipes < ActiveRecord::Migration[6.0]
     add_check_constraint :recipes, "prep_time > 0", name: "prep_time_check"
     add_check_constraint :recipes, "cook_time > 0", name: "cook_time_check"
     add_check_constraint :recipes, "people_quantity > 0", name: "people_quantity_check"
+    add_check_constraint :recipes, "nb_comments >= 0", name: "nb_comments_check"
   end
 end
