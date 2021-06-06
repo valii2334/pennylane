@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
     #   - people_quantity integer greater or equal with 1
     #   - cook_time integer -> seconds not null
     #   - total_time - method
-    #   - image text can be null
+    #   - image_url text can be null
     #   - nb_comments integer
     #
     #   tags
