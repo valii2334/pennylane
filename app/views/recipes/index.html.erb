@@ -1,0 +1,63 @@
+<section class="m-5">
+  <h1 class="text-center" >Welcome To Pennylane example</h1>
+
+  <% unless (session[:ingredients] || []).empty? %>
+    <table>
+      <% session[:ingredients].each do |ingredient| %>
+        <tr>
+          <td><%= ingredient %></td>
+          <td><%= link_to 'Remove Ingredient', remove_ingredient_from_session_recipes_path(ingredient_name: ingredient), method: :delete %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
+
+  <br>
+
+  <%= form_for :ingredients_form, url: add_ingredient_to_session_recipes_path do |f| %>
+
+    <%= f.text_field :ingredient_name, list: 'ingredients' %>
+
+    <datalist id="ingredients">
+      <% Ingredient.all.pluck(:name).each do |ingredient_name| %>
+        <option value="<%= ingredient_name %>"></option>
+      <% end %>
+    </datalist>
+
+    <%= f.submit 'Add ingredient' %>
+  <% end %>
+
+  <br>
+
+  <% @recipes.each do |recipe| %>
+    <div class="row">
+      <div class="col-12">
+        <div class="card">
+          <div class="row card-body">
+            <img class="col-sm-12 col-md-3 col-lg-3 img-20"
+                 src="<%= recipe.image_url || src="https://media.cntraveller.in/wp-content/uploads/2020/04/Home-cooking-recipes-self-isolatin-1366x768.jpg" %>"
+            />
+            <div class="col-sm-12 col-md-6 col-lg-6">
+              <h5 class="card-title">
+                <%= recipe.name %> <% recipe.author_tip ? "(#{recipe.author_tip})" : '' %>
+                <br>
+                <%= recipe.tags.pluck(:name).join(', ') %>
+              </h5>
+              <p class="card-text">
+                Author: <%= recipe.author.name %>,
+                        total time: <%= distance_of_time_in_words(Time.now, Time.now + recipe.total_time) %>,
+                        difficulty: <%= recipe.pretty_difficulty %>,
+                        budget: <%= recipe.pretty_budget %>,
+                        rate: <%= recipe.rate %>
+                <br>
+                Ingredients: <%= recipe.ingredients.pluck(:name).join(', ') %>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <br>
+  <% end %>
+</section>

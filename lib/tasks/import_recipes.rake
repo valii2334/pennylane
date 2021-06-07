@@ -18,7 +18,7 @@ task :import_recipes => :environment do
 
   json_recipes.each_with_index do |json_recipe, index|
     puts "Processing recipe #{index + 1}"
-    author = Author.find_or_create_by(name: json_recipe['name'])
+    author = Author.find_or_create_by(name: json_recipe['author'])
 
     found_tags = Tag.where(name: json_recipe['tags'].uniq)
     found_ingredients = Ingredient.where(name: json_recipe['ingredients'].uniq)
@@ -43,7 +43,7 @@ task :import_recipes => :environment do
 
     recipe = Recipe.create(
       rate:            json_recipe['rate'],
-      author_tip:      json_recipe['author_tip'],
+      author_tip:      json_recipe['author_tip'].empty? ? nil : json_recipe['author_tip'],
       budget:          json_recipe['budget'].downcase.gsub(' ', '_'),
       prep_time:       prep_time,
       name:            json_recipe['name'],
@@ -51,7 +51,7 @@ task :import_recipes => :environment do
       difficulty:      json_recipe['difficulty'].downcase.gsub(' ','_'),
       people_quantity: json_recipe['people_quantity'],
       cook_time:       cook_time,
-      image_url:       json_recipe['image'],
+      image_url:       json_recipe['image'].empty? ? nil : json_recipe['image'],
       nb_comments:     json_recipe['nb_comments']
     )
 

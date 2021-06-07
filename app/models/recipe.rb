@@ -30,4 +30,12 @@ class Recipe < ApplicationRecord
   def total_time
     prep_time + cook_time
   end
+
+  def pretty_difficulty
+    difficulty.gsub('_', ' ')
+  end
+
+  def pretty_budget
+    budget.gsub('_', ' ')
+  end
 end

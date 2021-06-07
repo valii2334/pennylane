@@ -6,6 +6,7 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 ruby '2.6.3'
 
 gem 'activerecord-import'
+gem 'active_model_serializers', '~> 0.10.0'
 gem 'rails', '~> 6.1.0'
 gem 'pg', '~> 1.2.3'
 # Use Puma as the app server
