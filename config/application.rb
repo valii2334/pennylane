@@ -19,5 +19,6 @@ module Rails6DeviseExample
     # the framework and any gems in your application.
     config.active_record.schema_format = :sql
     config.autoload_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('serializers')
   end
 end

@@ -2,15 +2,15 @@
 
 class RecipesController < ApplicationController
   def index
-    unless (session[:ingredients] || params[:ingredients_names] || []).empty?
-      @recipes = FindRecipesByIngredients.new(session[:ingredients]).perform
+    unless (ingredients_names).empty?
+      @recipes = FindRecipesByIngredients.new(ingredients_names).perform
     else
       @recipes = []
     end
 
     respond_to do |format|
       format.html
-      format.json { render json: @recipes }
+      format.json { render json: @recipes, each_serializer: RecipeSerializer }
     end
   end
 
@@ -25,5 +25,11 @@ class RecipesController < ApplicationController
     session[:ingredients].delete(params[:ingredient_name])
 
     redirect_to :root
+  end
+
+  private
+
+  def ingredients_names
+    session[:ingredients] || params[:ingredients_names] || []
   end
 end
