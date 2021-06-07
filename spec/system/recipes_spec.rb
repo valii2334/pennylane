@@ -20,10 +20,11 @@ RSpec.describe 'RecipesController', type: :system do
   }
 
   context '/recipes' do
-    it 'HTML - founds recipe' do
+    it 'adds ingredient and finds recipe' do
       visit '/recipes'
       select ingredient_1.name, from: "ingredients_form_ingredient_name"
-      click_button 'Add ingredient'
+
+      click_button 'Add Ingredient'
       expect(page).to have_content(grilled_cheese_sandwich.name)
     end
   end

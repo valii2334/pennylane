@@ -52,7 +52,7 @@ GEM
     activerecord (6.1.3.2)
       activemodel (= 6.1.3.2)
       activesupport (= 6.1.3.2)
-    activerecord-import (1.0.8)
+    activerecord-import (1.1.0)
       activerecord (>= 3.2)
     activestorage (6.1.3.2)
       actionpack (= 6.1.3.2)
@@ -264,7 +264,7 @@ DEPENDENCIES
   webpacker (~> 4.0)
 
 RUBY VERSION
-   ruby 2.6.3p62
+   ruby 2.6.7p197
 
 BUNDLED WITH
-   2.1.4
+   1.17.3

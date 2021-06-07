@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.6.7'
 
 gem 'activerecord-import'
 gem 'active_model_serializers', '~> 0.10.0'
