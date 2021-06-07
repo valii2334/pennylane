@@ -44,7 +44,7 @@
                 <%= recipe.tags.pluck(:name).join(', ') %>
               </h5>
               <p class="card-text">
-                Author: <%= recipe.author.name %>,
+                Author: <%= recipe.author.try(:name) %>,
                         total time: <%= distance_of_time_in_words(Time.now, Time.now + recipe.total_time) %>,
                         difficulty: <%= recipe.pretty_difficulty %>,
                         budget: <%= recipe.pretty_budget %>,

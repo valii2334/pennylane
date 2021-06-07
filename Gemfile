@@ -36,7 +36,8 @@ group :test do
   gem 'shoulda-matchers'
   # Fast Faker for dummy data creation
   gem 'ffaker',                     '~> 2.18.0'
-
   # Object factory
   gem 'factory_bot_rails',          '~> 6.1'
+  gem 'selenium-webdriver'
+  gem 'capybara'
 end
