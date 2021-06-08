@@ -170,6 +170,7 @@ CREATE TABLE public.recipes (
     nb_comments integer DEFAULT 0 NOT NULL,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL,
+    description text,
     CONSTRAINT cook_time_check CHECK ((cook_time > 0)),
     CONSTRAINT nb_comments_check CHECK ((nb_comments >= 0)),
     CONSTRAINT people_quantity_check CHECK ((people_quantity > 0)),
@@ -458,6 +459,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210606185457'),
 ('20210606185937'),
 ('20210606190643'),
-('20210606190842');
+('20210606190842'),
+('20210608091112');
 
 

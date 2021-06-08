@@ -17,6 +17,7 @@ RSpec.describe Recipe, type: :model do
   it { should have_attribute :cook_time }
   it { should have_attribute :image_url }
   it { should have_attribute :nb_comments }
+  it { should have_attribute :description }
 
   it { should have_many(:recipe_tags) }
   it { should have_many(:tags).through(:recipe_tags) }

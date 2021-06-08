@@ -1,5 +1,24 @@
 desc 'Import recipes from recipes.json'
 task :import_recipes => :environment do
+  stopwords = ['au', 'aux', 'avec', 'ce', 'ces', 'dans', 'de', 'des', 'du', 'elle', 'en', 'et', 'eux', 'il', 'je', 'la', 'le', 'leur', 'lui', 'ma',
+    'mais', 'me', 'même', 'mes', 'moi', 'mon', 'ne', 'nos', 'notre', 'nous', 'on', 'ou', 'par', 'pas', 'pour', 'qu', 'que',
+    'qui', 'sa', 'se', 'ses', 'son', 'sur', 'ta', 'te', 'tes', 'toi', 'ton', 'tu', 'un', 'une', 'vos', 'votre', 'vous',
+    'c', 'd', 'j', 'l', 'à', 'm', 'n', 's', 't', 'y', 'été', 'étée', 'étées', 'étés', 'étant', 'suis', 'es', 'est', 'sommes',
+    'êtes', 'sont', 'serai', 'seras', 'sera', 'serons', 'serez', 'seront', 'serais', 'serait',
+    'serions', 'seriez', 'seraient', 'étais', 'était', 'étions', 'étiez', 'étaient', 'fus', 'fut',
+    'fûmes', 'fûtes', 'furent', 'sois', 'soit', 'soyons', 'soyez', 'soient', 'fusse', 'fusses', 'fût',
+    'fussions', 'fussiez', 'fussent', 'ayant', 'eu', 'eue', 'eues', 'eus', 'ai', 'as', 'avons', 'avez', 'ont', 'aurai',
+    'auras', 'aura', 'aurons', 'aurez', 'auront', 'aurais', 'aurait', 'aurions', 'auriez', 'auraient', 'avais',
+    'avait', 'avions', 'aviez', 'avaient', 'eut', 'eûmes', 'eûtes', 'eurent', 'aie', 'aies', 'ait', 'ayons', 'ayez', 'aient',
+    'eusse', 'eusses', 'eût', 'eussions', 'eussiez', 'eussent', 'ceci', 'celà'  'cet', 'cette', 'ici', 'ils', 'les',
+    'leurs', 'quel', 'quels', 'quelle', 'quelles', 'sans', 'soi'
+  ]
+
+  quantities = ['g', 'kg', 'cl', 'l', 'ml', 'assez', 'autant', 'beaucoup', 'bien', 'combien', 'nombreux', 'trop', 'encore',
+    'majorité', 'maximum', 'minimum', 'moins', 'nombre', 'peu', 'plus', 'plupart', 'tant', 'trop', 'bouchée', 'gorgée', 'poignée', 'douzaine',
+    'centaine', 'milliers', 'boîte', 'bouteille', 'carton', 'pot', 'tasse', 'verre', 'litre', 'kilo'
+  ]
+
   Author.delete_all
   Recipe.delete_all
   Tag.delete_all
@@ -21,7 +40,28 @@ task :import_recipes => :environment do
     json_tags = json_recipe['tags'].uniq
     json_ingredients = json_recipe['ingredients'].uniq
 
-    found_tags = Tag.where(name: )
+    json_ingredients.each do |ingredient|
+      ingredient.gsub!(/[^A-Za-z]/i, ' ')
+    end
+
+    json_ingredients = json_ingredients.map { |ingredient|
+      ingredient.split(' ')
+    }.flatten
+
+    json_ingredients = json_ingredients.map { |ingredient|
+      ingredient = ingredient.downcase
+      ingredient = ingredient.singularize(:fr)
+    }
+
+    json_ingredients = json_ingredients.reject { |ingredient|
+      stopwords.include?(ingredient) ||
+      quantities.include?(ingredient) ||
+      ingredient.size < 2
+    }
+
+    json_ingredients.uniq!
+
+    found_tags = Tag.where(name: json_tags)
     found_ingredients = Ingredient.where(name: json_ingredients)
 
     tags = []
@@ -43,6 +83,7 @@ task :import_recipes => :environment do
 
     recipe = Recipe.create(
       rate:            json_recipe['rate'],
+      description:     json_recipe['ingredients'].uniq.join(', '),
       author_tip:      json_recipe['author_tip'].empty? ? nil : json_recipe['author_tip'],
       budget:          json_recipe['budget'].downcase.gsub(' ', '_'),
       prep_time:       prep_time,

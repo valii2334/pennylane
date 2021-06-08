@@ -16,6 +16,7 @@ gem 'sass-rails', '~> 5'
 # Transpile app-like JavaScript. Read more: https://github.com/rails/webpacker
 gem 'webpacker', '~> 4.0'
 gem 'devise'
+gem 'inflections'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
