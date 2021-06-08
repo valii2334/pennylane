@@ -41,16 +41,16 @@
               <h5 class="card-title">
                 <%= recipe.name %> <% recipe.author_tip ? "(#{recipe.author_tip})" : '' %>
                 <br>
-                <%= recipe.tags.pluck(:name).join(', ') %>
+                <%= recipe.tags.pluck(:name).join(', ') %>.
               </h5>
               <p class="card-text">
                 Author: <%= recipe.author.try(:name) %>,
                         total time: <%= distance_of_time_in_words(Time.now, Time.now + recipe.total_time) %>,
                         difficulty: <%= recipe.pretty_difficulty %>,
                         budget: <%= recipe.pretty_budget %>,
-                        rate: <%= recipe.rate %>
+                        rate: <%= recipe.rate %>.
                 <br>
-                Ingredients: <%= recipe.description %>
+                Ingredients: <%= recipe.description %>.
               </p>
             </div>
           </div>
