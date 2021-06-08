@@ -19,7 +19,7 @@
     <%= f.text_field :ingredient_name, list: 'ingredients' %>
 
     <datalist id="ingredients">
-      <% Ingredient.all.pluck(:name).each do |ingredient_name| %>
+      <% Ingredient.order(:name).pluck(:name).each do |ingredient_name| %>
         <option value="<%= ingredient_name %>"></option>
       <% end %>
     </datalist>
