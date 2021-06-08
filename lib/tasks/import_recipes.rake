@@ -40,6 +40,21 @@ task :import_recipes => :environment do
     json_tags = json_recipe['tags'].uniq
     json_ingredients = json_recipe['ingredients'].uniq
 
+    recipe = Recipe.create(
+      rate:            json_recipe['rate'],
+      description:     json_recipe['ingredients'].uniq.join(', '),
+      author_tip:      json_recipe['author_tip'].empty? ? nil : json_recipe['author_tip'],
+      budget:          json_recipe['budget'].downcase.gsub(' ', '_'),
+      prep_time:       ConvertStringToDuration.new(json_recipe['prep_time']).duration_as_integer,
+      name:            json_recipe['name'],
+      author_id:       author.id,
+      difficulty:      json_recipe['difficulty'].downcase.gsub(' ','_'),
+      people_quantity: json_recipe['people_quantity'],
+      cook_time:       ConvertStringToDuration.new(json_recipe['cook_time']).duration_as_integer,
+      image_url:       json_recipe['image'].empty? ? nil : json_recipe['image'],
+      nb_comments:     json_recipe['nb_comments']
+    )
+
     json_ingredients.each do |ingredient|
       ingredient.gsub!(/[^A-Za-z]/i, ' ')
     end
@@ -77,24 +92,6 @@ task :import_recipes => :environment do
       ingredient = Ingredient.create(name: ingredient_name) unless ingredient
       ingredients << ingredient
     end
-
-    prep_time = ConvertStringToDuration.new(json_recipe['prep_time']).duration_as_integer
-    cook_time = ConvertStringToDuration.new(json_recipe['cook_time']).duration_as_integer
-
-    recipe = Recipe.create(
-      rate:            json_recipe['rate'],
-      description:     json_recipe['ingredients'].uniq.join(', '),
-      author_tip:      json_recipe['author_tip'].empty? ? nil : json_recipe['author_tip'],
-      budget:          json_recipe['budget'].downcase.gsub(' ', '_'),
-      prep_time:       prep_time,
-      name:            json_recipe['name'],
-      author_id:       author.id,
-      difficulty:      json_recipe['difficulty'].downcase.gsub(' ','_'),
-      people_quantity: json_recipe['people_quantity'],
-      cook_time:       cook_time,
-      image_url:       json_recipe['image'].empty? ? nil : json_recipe['image'],
-      nb_comments:     json_recipe['nb_comments']
-    )
 
     ingredients.each do |ingredient|
       recipe_ingredients << { recipe_id: recipe.id, ingredient_id: ingredient.id }
