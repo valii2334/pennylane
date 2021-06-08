@@ -18,19 +18,21 @@ task :import_recipes => :environment do
     puts "Processing recipe #{index + 1}"
     author = Author.find_or_create_by(name: json_recipe['author'])
 
-    found_tags = Tag.where(name: json_recipe['tags'].uniq)
-    found_ingredients = Ingredient.where(name: json_recipe['ingredients'].uniq)
+    json_tags = json_recipe['tags'].uniq
+    json_ingredients = json_recipe['ingredients'].uniq
+
+    found_tags = Tag.where(name: )
+    found_ingredients = Ingredient.where(name: json_ingredients)
 
     tags = []
-    json_recipe['tags'].uniq.each do |tag_name|
+    json_tags.each do |tag_name|
       tag = found_tags.select { |tag| tag.name == tag_name }.first
       tag = Tag.create(name: tag_name) unless tag
-
       tags << tag
     end
 
     ingredients = []
-    json_recipe['ingredients'].uniq.each do |ingredient_name|
+    json_ingredients.each do |ingredient_name|
       ingredient = found_ingredients.select { |ingredient| ingredient.name == ingredient_name }.first
       ingredient = Ingredient.create(name: ingredient_name) unless ingredient
       ingredients << ingredient
