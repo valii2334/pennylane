@@ -1,7 +1,5 @@
 desc 'Import recipes from recipes.json'
 task :import_recipes => :environment do
-  require File.expand_path('../../convert_string_to_duration', __FILE__)
-
   Author.delete_all
   Recipe.delete_all
   Tag.delete_all
